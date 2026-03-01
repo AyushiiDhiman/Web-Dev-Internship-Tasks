@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Form</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="form-container">
+    <h2>Contact Us</h2>
+
+    <form id="contactForm">
+        <div class="field">
+            <input type="text" id="name" placeholder="Your Name">
+            <small></small>
+        </div>
+
+        <div class="field">
+            <input type="email" id="email" placeholder="Email Address">
+            <small></small>
+        </div>
+
+        <div class="field">
+            <input type="tel" id="phone" placeholder="Phone Number">
+            <small></small>
+        </div>
+
+        <div class="field">
+            <textarea id="message" placeholder="Your Message"></textarea>
+            <small></small>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+const form = document.getElementById("contactForm");
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const phoneInput = document.getElementById("phone");
+const messageInput = document.getElementById("message");
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+    validateForm();
+});
+
+function validateForm() {
+    let isValid = true;
+
+    if (nameInput.value.trim() === "") {
+        showError(nameInput, "Name is required");
+        isValid = false;
+    } else {
+        showSuccess(nameInput);
+    }
+
+    if (!validateEmail(emailInput.value)) {
+        showError(emailInput, "Enter a valid email");
+        isValid = false;
+    } else {
+        showSuccess(emailInput);
+    }
+
+    if (!/^\d{10}$/.test(phoneInput.value)) {
+        showError(phoneInput, "Enter 10-digit phone number");
+        isValid = false;
+    } else {
+        showSuccess(phoneInput);
+    }
+
+    if (messageInput.value.trim() === "") {
+        showError(messageInput, "Message cannot be empty");
+        isValid = false;
+    } else {
+        showSuccess(messageInput);
+    }
+
+    if (isValid) {
+        alert("Form submitted successfully!");
+        form.reset();
+        document.querySelectorAll(".field").forEach(f => f.className = "field");
+    }
+}
+
+function showError(input, message) {
+    const field = input.parentElement;
+    field.className = "field error";
+    field.querySelector("small").innerText = message;
+}
+
+function showSuccess(input) {
+    const field = input.parentElement;
+    field.className = "field success";
+}
+
+function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+</script>
+
+</body>
+</html>

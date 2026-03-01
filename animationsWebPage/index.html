@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cartoon World</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Comic Sans MS", cursive;
+}
+
+body{
+  background:linear-gradient(to bottom,#fef3c7,#fde68a);
+  text-align:center;
+  transition:0.5s;
+}
+
+body.dark{
+  background:#1f2933;
+  color:white;
+}
+
+
+.hero{
+  padding:80px 20px;
+  background:#fb7185;
+  color:white;
+}
+
+.toggle{
+  margin-top:15px;
+  padding:8px 15px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+.cartoon-section{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  flex-wrap:wrap;
+  padding:60px 20px;
+}
+
+
+.cartoon-card{
+  background:white;
+  width:220px;
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  transition:0.4s;
+}
+
+body.dark .cartoon-card{
+  background:#374151;
+}
+
+.cartoon-card:hover{
+  transform:scale(1.1) rotate(2deg);
+}
+
+
+.cartoon{
+  width:150px;
+  height:150px;
+  margin:auto;
+  border-radius:50%;
+  font-size:80px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation:bounce 2s infinite;
+  cursor:pointer;
+}
+
+.oggy{ background:#60a5fa; }
+.pooh{ background:#fde047; }
+.mickey{ background:#f87171; }
+
+
+.cartoon:hover::after{
+  content:attr(data-name);
+  position:absolute;
+  margin-top:160px;
+  background:black;
+  color:white;
+  padding:4px 8px;
+  border-radius:8px;
+  font-size:12px;
+}
+
+
+.footer{
+  padding:30px;
+  background:#fb7185;
+  color:white;
+}
+
+
+.hidden{
+  opacity:0;
+  transform:translateY(50px);
+  transition:1s;
+}
+
+.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+
+@keyframes bounce{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-10px); }
+}
+</style>
+</head>
+
+<body>
+
+<header class="hero">
+  <h1>🎈 Cartoon World</h1>
+  <p>Scroll down to meet your favorite cartoons!</p>
+  <button class="toggle" onclick="toggleMode()">🌙 Dark Mode</button>
+</header>
+
+<section class="cartoon-section">
+
+  <div class="cartoon-card hidden">
+    <div class="cartoon oggy" data-name="Oggy" onclick="changeColor(this)">😺</div>
+    <h3>Oggy</h3>
+    <p>Lazy blue cat</p>
+  </div>
+
+  <div class="cartoon-card hidden">
+    <div class="cartoon pooh" data-name="Winnie the Pooh" onclick="changeColor(this)">🐻</div>
+    <h3>Winnie the Pooh</h3>
+    <p>Honey lover 🍯 </p>
+  </div>
+
+  <div class="cartoon-card hidden">
+    <div class="cartoon mickey" data-name="Mickey Mouse" onclick="changeColor(this)">🐭</div>
+    <h3>Mickey Mouse</h3>
+    <p>Disney superstar</p>
+  </div>
+
+</section>
+
+<footer class="footer hidden">
+  <p>Made with ❤️ by Ayushi</p>
+</footer>
+
+<script>
+
+const items=document.querySelectorAll(".hidden");
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+    }
+  });
+},{threshold:0.2});
+items.forEach(i=>observer.observe(i));
+
+
+function toggleMode(){
+  document.body.classList.toggle("dark");
+}
+
+
+function changeColor(el){
+  el.style.background =
+    `hsl(${Math.random()*360},70%,70%)`;
+}
+</script>
+
+</body>
+</html>
